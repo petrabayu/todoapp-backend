@@ -1,3 +1,7 @@
+const express = require("express");
+const app = express();
+app.use(express.json());
+
 const Cryptr = require("cryptr");
 const CryptrNew = new Cryptr("secretkey");
 
@@ -72,6 +76,7 @@ async function LoginMongo(req, res, next) {
       });
     } else {
       let passwordUser = CryptrNew.decrypt(getUsers.dataValues.password);
+
       if (req.body.password !== passwordUser) {
         res.status(400).send({
           message: "username or password are wrong",

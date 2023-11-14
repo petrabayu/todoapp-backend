@@ -11,6 +11,12 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
+app.get("/", (req, res) => {
+  res.send(
+    "Welcome to the todo backedn app. use /auth to login-register. use /todo to make your todo list"
+  );
+});
+
 const ConnectionMongoDB = require("./models/ConnectionMongoDB");
 ConnectionMongoDB();
 

@@ -2,22 +2,26 @@ const router = require("express").Router();
 
 const todoItemModel = require("../../models/schema/todo");
 
+router.get("/", (req, res, next) => {
+  res.send("Welcome to article home routes!");
+});
+
 // create todo item
-router.post("/api/item", async (req, res) => {
+router.post("/post/items", async (req, res) => {
   try {
     const newItem = new todoItemModel({
       item: req.body.item,
     });
 
     const saveItem = await newItem.save();
-    res.status(200).json("New Item Added Successfully");
+    res.status(200).json("New Todo Added Successfully");
   } catch (error) {
     res.json(error);
   }
 });
 
 // get all data from todo
-router.get("/api/item", async (req, res) => {
+router.get("/get/items", async (req, res) => {
   try {
     const allTodoItem = await todoItemModel.find({});
     res.status(200).json(allTodoItem);
@@ -27,7 +31,7 @@ router.get("/api/item", async (req, res) => {
 });
 
 // get a todo item
-router.get("/api/item/:id", async (req, res) => {
+router.get("/get/items/:id", async (req, res) => {
   try {
     const allTodoItem = await todoItemModel.findById(req.params.id);
     res.status(200).json(allTodoItem);
@@ -37,7 +41,7 @@ router.get("/api/item/:id", async (req, res) => {
 });
 
 //update a todo item
-router.put("/api/item/:id", async (req, res) => {
+router.put("/put/items/:id", async (req, res) => {
   try {
     const updateItem = await todoItemModel.findByIdAndUpdate(req.params.id, {
       $set: req.body,
@@ -49,7 +53,7 @@ router.put("/api/item/:id", async (req, res) => {
 });
 
 //delete a todo item
-router.delete("/api/item/:id", async (req, res) => {
+router.delete("/delete/items/:id", async (req, res) => {
   try {
     const deleteTodoItem = await todoItemModel.findByIdAndDelete(req.params.id);
     res.status(200).json("Todo Item Deleted");
@@ -59,7 +63,7 @@ router.delete("/api/item/:id", async (req, res) => {
 });
 
 //delete all todo
-router.delete("/api/item", async (req, res) => {
+router.delete("/delete/items", async (req, res) => {
   try {
     const deleteTodoItem = await todoItemModel.deleteMany();
     res.status(200).json("All Todo Item are Deleted");
